@@ -9,10 +9,10 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @Validated
 public class PolicyDto {
-    @Min(value = Constants.MIN_ID) @Max(value = Constants.MAX_ID)
+    @Min(value = Constants.POLICY_MIN_ID) @Max(value = Constants.POLICY_MAX_ID)
     int policyNumber;
-    @NotNull
+    @Min(value = Constants.PRODUCT_MIN_ID) @Max(value = Constants.PRODUCT_MAX_ID)
     int productNumber;
     @NotNull
-    InsuredDto insured;
+    int insured;
 }

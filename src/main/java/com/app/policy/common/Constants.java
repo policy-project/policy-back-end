@@ -3,8 +3,24 @@ package com.app.policy.common;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface Constants {
-    @Value("${policy.id.min}:100000000")
-    public static final int MIN_ID = 100_000_000;
-    @Value("${policy.id.max}:999999999")
-    public static final int MAX_ID = 999_999_999;
+    public static final int POLICY_MIN_ID = 100_000_000;
+    public static final int POLICY_MAX_ID = 999_999_999;
+    public static final int INSURED_MIN_ID = 100_000_000;
+    public static final int INSURED_MAX_ID = 999_999_999;
+    public static final int PRODUCT_MIN_ID = 100;
+    public static final int PRODUCT_MAX_ID = 999;
+
+    public static final String STATUS_CODE = "statusCode";
+    public static final String STATUS_DESCRIPTION = "statusDescription";
+
+    public static interface POLICY_API{
+        public static final String MAIN = "/policies";
+        public static final String POLICY_BY_INSURED = "/insured";
+        public static final String POLICY_BY_PRODUCT = "/product";
+
+    }
+
+    public static interface INSURED_API{
+        public static final String MAIN = "/insureds";
+    }
 }

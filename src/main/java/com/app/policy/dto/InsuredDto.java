@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @Validated
 public class InsuredDto {
-    @Min(value = Constants.MIN_ID) @Max(value = Constants.MAX_ID)
+    @Min(value = Constants.INSURED_MIN_ID) @Max(value = Constants.INSURED_MAX_ID)
     int insuredId;
     @NotEmpty
     String insuredFirstName;
