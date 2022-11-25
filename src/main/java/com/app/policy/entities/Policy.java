@@ -9,7 +9,7 @@ public class Policy {
     int policyNumber;
     @Column(name = "product_id")
     int productNumber;
-    @ManyToOne @Column(name = "insured_id")
-    Insured insuredId;
+    @ManyToOne(cascade = CascadeType.REMOVE) @JoinColumn(name = "insured_id")
+    Insured insured;
 
 }
