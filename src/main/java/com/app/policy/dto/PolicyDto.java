@@ -13,6 +13,6 @@ public class PolicyDto {
     int policyNumber;
     @Min(value = Constants.PRODUCT_MIN_ID) @Max(value = Constants.PRODUCT_MAX_ID)
     int productNumber;
-    @NotNull
-    int insured;
+    @Min(value = Constants.INSURED_MIN_ID) @Max(value = Constants.INSURED_MAX_ID)
+    int insuredId;
 }

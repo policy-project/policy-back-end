@@ -3,6 +3,8 @@ package com.app.policy.controller;
 import com.app.policy.common.Constants;
 import com.app.policy.common.StatusDescription;
 import com.app.policy.dto.PolicyDto;
+import com.app.policy.dto.PolicyInsuredDto;
+import com.app.policy.services.InsuredService;
 import com.app.policy.services.PolicyService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -13,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(Constants.POLICY_API.MAIN)
@@ -26,45 +30,57 @@ public class PolicyController {
 
     @GetMapping
     ResponseEntity getAllPolicy(){
+        log.debug("get all policy end point");
+        List<PolicyDto> response = policyService.getAllPolicy();
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
+    }
 
-        ResponseEntity response = new ResponseEntity(null, HttpStatus.OK);
-
-        String statusDescription = StatusDescription.SUCCESSFUL.toString();
-        response.getHeaders().add(Constants.STATUS_DESCRIPTION, statusDescription);
-
-        return response;
+    @GetMapping(Constants.POLICY_API.POLICY_INSURED)
+    ResponseEntity getAllPolicyInsured(){
+        log.debug("get all policy insured end point");
+        List<PolicyInsuredDto> response = policyService.getAllPolicyInsured();
+        log.debug("{}", response);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
     }
 
     @GetMapping("/{id}")
     ResponseEntity getPolicy(@PathVariable @Min(value = Constants.POLICY_MIN_ID) @Max(value = Constants.POLICY_MAX_ID) int id){
-
-        ResponseEntity response = new ResponseEntity(null, HttpStatus.OK);
-
-        String statusDescription = StatusDescription.SUCCESSFUL.toString();
-        response.getHeaders().add(Constants.STATUS_DESCRIPTION, statusDescription);
-
-        return response;
+        log.debug("get policy end point by id {}", id);
+        PolicyDto response = policyService.getPolicy(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
     }
 
     @GetMapping(Constants.POLICY_API.POLICY_BY_INSURED + "/{id}")
     ResponseEntity getPolicyByInsured(@PathVariable @Min(value = Constants.INSURED_MIN_ID) @Max(value = Constants.INSURED_MAX_ID) int id){
-
-        ResponseEntity response = new ResponseEntity(null, HttpStatus.OK);
-
-        String statusDescription = StatusDescription.SUCCESSFUL.toString();
-        response.getHeaders().add(Constants.STATUS_DESCRIPTION, statusDescription);
-
-        return response;
+        log.debug("get policy by insured id {}", id);
+        List<PolicyDto> response = policyService.getPolicyByInsured(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
     }
 
     @PostMapping
     ResponseEntity postPolicy(@Valid @RequestBody PolicyDto request){
-
-        ResponseEntity response = new ResponseEntity(null, HttpStatus.OK);
-
-        String statusDescription = StatusDescription.SUCCESSFUL.toString();
-        response.getHeaders().add(Constants.STATUS_DESCRIPTION, statusDescription);
-
-        return response;
+        log.debug("post policy end point {}", request);
+        PolicyDto response = policyService.postPolicy(request);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
     }
+
+    @PostMapping(Constants.POLICY_API.ADD_ALL)
+    ResponseEntity postPolicy(@Valid @RequestBody List<PolicyDto> request){
+        log.debug("post policy list end point {}", request);
+        List<PolicyDto> response = policyService.postPolicy(request);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
+    }
+
 }

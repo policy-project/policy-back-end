@@ -4,14 +4,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "insureds")
+@Data
 public class Insured {
     @Id @Column(name = "insured_id")
-    int insuredId;
+    private int insuredId;
     @Column(name = "first_name")
-    String insuredFirstName;
+    private String insuredFirstName;
     @Column(name = "last_name")
-    String insuredLastName;
+    private String insuredLastName;
 }
