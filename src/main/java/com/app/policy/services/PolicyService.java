@@ -1,9 +1,9 @@
 package com.app.policy.services;
 
 import com.app.policy.dto.PolicyDto;
-import com.app.policy.dto.PolicyInsuredDto;
 import com.app.policy.entities.Insured;
 import com.app.policy.entities.Policy;
+import com.app.policy.interfaces.PolicyInsured;
 import com.app.policy.repo.InsuredRepository;
 import com.app.policy.repo.PolicyRepository;
 import jakarta.persistence.EntityManager;
@@ -40,10 +40,7 @@ public class PolicyService {
     }
 
     public List<PolicyDto> getPolicyByInsured(int id) {
-        List<PolicyDto> response = policyRepository.findPolicyByInsuredId(id).stream().map(policy -> policy.getPolicyDto()).toList();
-        if (response.size() == 0) {
-            throw new EntityNotFoundException("Not found policy by id insured " + id);
-        }
+        List<PolicyDto> response = policyRepository.findPolicyByInsuredId(id);
         return response;
     }
 
@@ -74,20 +71,14 @@ public class PolicyService {
         return res;
     }
 
-    public List<PolicyInsuredDto> getAllPolicyInsured() {
-        List<PolicyInsuredDto> res = new LinkedList<>();
-        List<Policy> policies = policyRepository.findAll();
-        for (Policy policy :
-                policies) {
-            log.debug("{}", policy);
-            Insured insured = policy.getInsured();
-            res.add(PolicyInsuredDto.builder().policyNumber(policy.getPolicyNumber())
-                    .productNumber(policy.getProductNumber())
-                    .insuredId(insured.getInsuredId())
-                    .insuredFirstName(insured.getInsuredFirstName())
-                    .insuredLastName(insured.getInsuredLastName())
-                    .build());
-        }
-        return res;
+    public List<PolicyInsured> getAllPolicyInsuredQuery() {
+        return policyRepository.findPolicyInsured();
     }
+
+    public List<PolicyDto> getPolicyByProductNumber(int id){
+        return policyRepository.findPolicyByProductNumber(id).stream()
+                .map(policy -> new PolicyDto(policy.getPolicyNumber(), policy.getProductNumber(), policy.getInsured().getInsuredId()))
+                .toList();
+    }
+
 }

@@ -19,6 +19,8 @@ public interface Constants {
         public static final String POLICY_BY_PRODUCT = "/product";
         public static final String ADD_ALL = "/add/all";
         public static final String POLICY_INSURED = "/dashboard";
+        public static final String POLICY_INSURED_QUERY = "/dashboard/query";
+
 
     }
 

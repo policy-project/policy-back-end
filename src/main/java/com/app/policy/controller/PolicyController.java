@@ -3,8 +3,7 @@ package com.app.policy.controller;
 import com.app.policy.common.Constants;
 import com.app.policy.common.StatusDescription;
 import com.app.policy.dto.PolicyDto;
-import com.app.policy.dto.PolicyInsuredDto;
-import com.app.policy.services.InsuredService;
+import com.app.policy.interfaces.PolicyInsured;
 import com.app.policy.services.PolicyService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -40,8 +39,7 @@ public class PolicyController {
     @GetMapping(Constants.POLICY_API.POLICY_INSURED)
     ResponseEntity getAllPolicyInsured(){
         log.debug("get all policy insured end point");
-        List<PolicyInsuredDto> response = policyService.getAllPolicyInsured();
-        log.debug("{}", response);
+        List<PolicyInsured> response = policyService.getAllPolicyInsuredQuery();
         return ResponseEntity.status(HttpStatus.OK)
                 .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
                 .body(response);
@@ -65,6 +63,15 @@ public class PolicyController {
                 .body(response);
     }
 
+    @GetMapping(Constants.POLICY_API.POLICY_BY_PRODUCT + "/{id}")
+    ResponseEntity getPolicyByProductNumber(@PathVariable @Min(value = Constants.PRODUCT_MIN_ID) @Max(value = Constants.PRODUCT_MAX_ID) int id){
+        log.debug("get policy by product id {}", id);
+        List<PolicyDto> response = policyService.getPolicyByProductNumber(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
+    }
+
     @PostMapping
     ResponseEntity postPolicy(@Valid @RequestBody PolicyDto request){
         log.debug("post policy end point {}", request);
@@ -75,7 +82,7 @@ public class PolicyController {
     }
 
     @PostMapping(Constants.POLICY_API.ADD_ALL)
-    ResponseEntity postPolicy(@Valid @RequestBody List<PolicyDto> request){
+    ResponseEntity postPolicies(@Valid @RequestBody List<PolicyDto> request){
         log.debug("post policy list end point {}", request);
         List<PolicyDto> response = policyService.postPolicy(request);
         return ResponseEntity.status(HttpStatus.OK)
