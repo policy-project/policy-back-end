@@ -2,6 +2,8 @@ package com.app.policy.common;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import java.net.URI;
+
 public interface Constants {
     public static final int POLICY_MIN_ID = 100_000_000;
     public static final int POLICY_MAX_ID = 999_999_999;

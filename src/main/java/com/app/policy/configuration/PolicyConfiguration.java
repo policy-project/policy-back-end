@@ -1,5 +1,6 @@
 package com.app.policy.configuration;
 
+import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,4 +11,6 @@ public class PolicyConfiguration {
     ModelMapper getModelMapper() {
         return new ModelMapper();
     }
+    @Bean
+    Gson getGson(){return  new Gson();}
 }
