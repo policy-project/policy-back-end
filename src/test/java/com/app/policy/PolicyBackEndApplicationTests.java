@@ -53,7 +53,6 @@ class PolicyBackEndApplicationTests {
                 .andReturn().getResponse().getContentAsString();
         InsuredDto insuredDtoResponse = gson.fromJson(response, InsuredDto.class);
         assertTrue(insuredDtoResponse.equals(insuredDto));
-
     }
 
     public static String asJsonString(final Object obj) {

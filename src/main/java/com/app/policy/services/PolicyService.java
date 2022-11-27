@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @AllArgsConstructor
@@ -79,6 +80,17 @@ public class PolicyService {
         return policyRepository.findPolicyByProductNumber(id).stream()
                 .map(policy -> new PolicyDto(policy.getPolicyNumber(), policy.getProductNumber(), policy.getInsured().getInsuredId()))
                 .toList();
+    }
+
+    public PolicyDto removePolicy(int id){
+        Policy policy = policyRepository.findById(id).orElse(null);
+        if (policy == null){
+            throw new EntityNotFoundException("not found policy by id " + id);
+        }
+        PolicyDto response = mapper.map(policy, PolicyDto.class);
+        response.setInsuredId(policy.getInsured().getInsuredId());
+        policyRepository.deleteById(id);
+        return response;
     }
 
 }

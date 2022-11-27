@@ -90,4 +90,13 @@ public class PolicyController {
                 .body(response);
     }
 
+    @DeleteMapping("{/id}")
+    ResponseEntity deletePolicy(@PathVariable @Min(value = Constants.POLICY_MIN_ID) @Max(value = Constants.POLICY_MAX_ID) int id){
+        log.debug("remove policy end point by id {}", id);
+        PolicyDto response = policyService.removePolicy(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
+    }
+
 }
