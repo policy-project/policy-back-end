@@ -16,8 +16,6 @@ public interface PolicyRepository extends JpaRepository<Policy, Integer> {
             "WHERE i.insuredId = :id")
     List<PolicyDto> findPolicyByInsuredId(@Param("id") int id);
 
-//    @Query(value = "SELECT new com.app.policy.dto.PolicyDto(p.policyNumber, p.productNumber, p.insured.insuredId) " +
-//            "FROM Policy p WHERE p.productNumber = :id")
     List<Policy> findPolicyByProductNumber(@Param("id") int productNumber);
 
     @Query(value = "SELECT policy_id as policyNumber, product_id as productNumber," +
