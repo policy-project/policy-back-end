@@ -47,7 +47,7 @@ public class PolicyService {
 
 
     public PolicyDto postPolicy(PolicyDto request) {
-        Insured insured = insuredRepository.getById(request.getInsuredId());
+        Insured insured = insuredRepository.getReferenceById(request.getInsuredId());
         if (insured == null) {
             throw new EntityNotFoundException("Not found insured by id " + request.getInsuredId());
         }
@@ -60,7 +60,7 @@ public class PolicyService {
     public List<PolicyDto> postPolicy(List<PolicyDto> request) {
         List<PolicyDto> res = new LinkedList<>();
         for (PolicyDto policyDto : request) {
-            Insured insured = insuredRepository.getById(policyDto.getInsuredId());
+            Insured insured = insuredRepository.getReferenceById(policyDto.getInsuredId());
             if (insured == null) {
                 break;
             }
