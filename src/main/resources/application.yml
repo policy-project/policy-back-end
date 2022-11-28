@@ -1,0 +1,5 @@
+logging:
+    level:
+        com:
+            app:
+                policy: ${LOGGING_LEVEL:debug}
