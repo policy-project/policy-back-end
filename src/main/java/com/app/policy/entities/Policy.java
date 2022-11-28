@@ -14,7 +14,7 @@ public class Policy {
     private int policyNumber;
     @Column(name = "product_id")
     private int productNumber;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Insured insured;
 
     public PolicyDto getPolicyDto(){
