@@ -63,5 +63,12 @@ public class InsuredController {
                 .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
                 .body(response);
     }
+    @DeleteMapping("/{id}")
+    ResponseEntity removeInsured(@PathVariable int id){
+        InsuredDto response = insuredService.removeInsured(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.STATUS_DESCRIPTION, StatusDescription.SUCCESSFUL.toString())
+                .body(response);
+    }
 
 }

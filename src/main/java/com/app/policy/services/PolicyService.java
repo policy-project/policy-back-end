@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Log4j2
 @AllArgsConstructor
@@ -60,9 +60,10 @@ public class PolicyService {
     public List<PolicyDto> postPolicy(List<PolicyDto> request) {
         List<PolicyDto> res = new LinkedList<>();
         for (PolicyDto policyDto : request) {
-            Insured insured = insuredRepository.getReferenceById(policyDto.getInsuredId());
+            Insured insured = insuredRepository.findById(policyDto.getInsuredId()).orElse(null);
             if (insured == null) {
-                break;
+                log.error("error post policy {} insured not found {}", policyDto.getPolicyNumber(), policyDto.getInsuredId());
+                continue;
             }
             Policy policy = mapper.map(policyDto, Policy.class);
             policy.setInsured(insured);

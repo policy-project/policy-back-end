@@ -1,10 +1,9 @@
 package com.app.policy.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "insureds")
@@ -16,4 +15,7 @@ public class Insured {
     private String insuredFirstName;
     @Column(name = "last_name")
     private String insuredLastName;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "insured_id")
+    private List<Policy> policies;
 }

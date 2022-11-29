@@ -41,12 +41,16 @@ public class InsuredService {
     }
 
     public List<InsuredDto> postInsured(List<InsuredDto> request){
-        List<InsuredDto> res = new LinkedList<>();
-        for (InsuredDto insuredDto:
-                request) {
-            Insured response = insuredRepository.save(mapper.map(insuredDto, Insured.class));
-            res.add(mapper.map(response, InsuredDto.class));
+        List<Insured> insureds = request.stream().map(insuredDto -> mapper.map(insuredDto, Insured.class)).toList();
+        return insuredRepository.saveAll(insureds).stream().map(insured -> mapper.map(insured, InsuredDto.class)).toList();
+    }
+
+    public InsuredDto removeInsured(int id){
+        Insured insured = insuredRepository.findById(id).orElse(null);
+        if(insured == null){
+            throw new EntityNotFoundException("Not found insured by id " + id);
         }
-        return res;
+        insuredRepository.deleteById(id);
+        return mapper.map(insured, InsuredDto.class);
     }
 }

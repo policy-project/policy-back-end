@@ -19,7 +19,7 @@ public interface PolicyRepository extends JpaRepository<Policy, Integer> {
     List<Policy> findPolicyByProductNumber(@Param("id") int productNumber);
 
     @Query(value = "SELECT policy_id as policyNumber, product_id as productNumber," +
-            " insured_id as insuredId, first_name as insuredFirstName, last_name as insuredLastName " +
-            " FROM policies JOIN insureds on insureds.insured_id = policies.insured_insured_id", nativeQuery = true)
+            " policies.insured_id as insuredId, first_name as insuredFirstName, last_name as insuredLastName " +
+            " FROM policies JOIN insureds on insureds.insured_id = policies.insured_id", nativeQuery = true)
     List<PolicyInsured> findPolicyInsured();
 }
